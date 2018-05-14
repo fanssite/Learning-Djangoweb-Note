@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}blog title{% endblock %}
+{% block content %}
+<div class='row text-center vertical-middle-sm'>
+	<h1>Django Learing Note</h1>
+</div>
+
+<div  class='row'>
+	<div class='col-xs-12 col-md-8'>
+	<ul>
+	{% for blog in blogs %}
+		
+		<li><a href="article_id{{blog.id}}">{{forloop.counter}}:{{blog.title}}</a></li>
+	{% endfor %}
+	</ul>
+	</div>
+	
+	<div class='col-xs-6 col-md-4'>
+		<img width='200px' src='/static/p.jpg'>
+		<p>pos of useful URL</p>
+			<li><a class='pos_url_0' href="https://docs.djangoproject.com/en/2.0/">https://docs.djangoproject.com/en/2.0/(Django)</a></li>
+			<li><a class='pos_url_1' href="https://www.w3.org/TR/">https://www.w3.org/TR/(h5,css,js <latest>)</a></li>
+			<li><a class='pos_url_2' href='https://github.com/'>https://github.com/(Git)</a></li>
+	</div>	
+<!--</div>	加了以后1920*1080不能正下居中放置-->
+	
+	<!--<h2>ad</h2>
+	<p>position of advertisement</p>
+	<img width='200px'src='/static/p.jpg'>-->
+
+{% endblock %}

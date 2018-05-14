@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}blog artical{% endblock %}
+
+{% block content %}
+<div class='row text-center vertical-middle-sm'>
+	<h1>{{article.title}}</h1>
+</div>
+
+<div class='row'>
+	<div class='col-xs-12 col-md-8'>
+		<p class='text-center'><span>{{article.author.username}}</span><span style='margin-left:20px'>{{publish}}</span></p>
+		<div>{{article.content}}</div>
+	</div>
+	
+	<div class='col-xs-6 col-md-4'>
+		<img width='200px' src='/static/p.jpg'>
+		<p>pos of useful URL</p>
+			<li><a class='pos_url_0' href="https://docs.djangoproject.com/en/2.0/">https://docs.djangoproject.com/en/2.0/(Django)</a></li>
+			<li><a class='pos_url_1' href="https://www.w3.org/TR/">https://www.w3.org/TR/(h5,css,js <latest>)</a></li>
+			<li><a class='pos_url_2' href='https://github.com/'>https://github.com/(Git)</a></li>
+	</div>	
+
+
+{% endblock %}
