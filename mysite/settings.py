@@ -125,3 +125,5 @@ STATIC_URL = '/static/'#该配置使得浏览器可以直接通过port:/static/x
 STATICFILES_DIRS = ( 
     os.path.join(BASE_DIR,'static'),
 )
+
+LOGIN_REDIRECT_URL= '/blog/'

@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/',include(('blog.urls','blog'),'blog')),
     path('account/',include(('account.urls','account'),'account')),
-    path('register/',blog.views.Sign_in),
+#     path('register/',blog.views.Sign_in,name='sig_in'),
 ]

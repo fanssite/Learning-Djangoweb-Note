@@ -16,8 +16,8 @@ class BlogArticles(models.Model):
     content = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     
-    class Meta:
-        ordering=('-publish',)
+#     class Meta:
+#         ordering=('-publish',)
     def __str__(self):
         return self.content
 class Register(models.Model):
