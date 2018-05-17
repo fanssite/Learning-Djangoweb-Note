@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<div class='container'>
+	<nav class='navbar navbar_default' role='navigation'>
+	
+		<div class='navbar-header'>
+			<a class='navbar-brand' href="https://docs.djangoproject.com/en/2.0/"> <img src="{% static '/images/p.jpg' %}" height='40px'></a>
+		</div>
+		
+		<div>
+			<ul class='nav navbar-nav' role='navigation'>
+				{% if user.is_authenticated %}
+				<li><a href="{% url 'blog:blog_title' %}">Blog</a></li>
+				{% else %}
+				<li><a href="#">Blog</a></li>
+				{% endif %}
+			</ul>
+			
+			<ul class='nav navbar-nav navbar-right' style='margin-right:10px'>
+				{% if user.is_authenticated %}
+				<li><a href="#">{{user.username}}</a>
+				<li><a href="{% url 'account:user_logout' %}">Layout</a></li>
+				{% else %}
+				<li><a href="{% url 'account:user_register' %}">Sign up</a></li>
+				<li><a href="{% url 'account:user_login' %}">Sign in</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		
+	</nav>
+</div>
