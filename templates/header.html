@@ -25,13 +25,15 @@
 						</ul>					
 					</div>
 				</li>
+				
 				<li><a href="{% url 'account:user_logout' %}">Layout</a></li>
 				{% else %}
 				<li><a href="{% url 'account:user_register' %}">Sign up</a></li>
 				<li><a href="{% url 'account:user_login' %}">Sign in</a></li>
 				{% endif %}
 			</ul>
-		</div>		
+		</div>
+		
 	</nav>
 </div>
 <script src="{% static 'js/jquery.js'%}"></script>

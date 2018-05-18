@@ -10,3 +10,4 @@ class UserProfileAdmin(admin.ModelAdmin):
         fields = ('user','birth','phone')
 
 admin.site.register(UserProfile, UserProfileAdmin)
+
