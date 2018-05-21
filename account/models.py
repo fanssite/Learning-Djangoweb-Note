@@ -9,3 +9,11 @@ class UserProfile(models.Model):
     def __str__(self):
         return 'user {0}'.foramt(self.user.username)
         return '{0}'.format(self.user.username)
+
+class UserInfo(models.Model):
+    user = models.OneToOneField(User,unique=True,on_delete=True)
+    address = models.CharField(max_length=100,blank=True)
+    school = models.CharField(max_length=100,blank=True)
+    company = models.CharField(max_length=100,blank=True)
+    profession = models.CharField(max_length=100,blank=True)
+    abouteme = models.TextField(blank=True)

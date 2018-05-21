@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile,UserInfo
 #页面登录表单，继承Form
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -25,8 +25,12 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('birth','phone')
     
-class UserProfileForm(forms.ModelForm):
+class UserInfoForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
-        fields = ('birth','phone')
+        model = UserInfo
+        fields = ('school','profession','address','company','abouteme')
 
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('email',)
