@@ -24,13 +24,13 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('birth','phone')
-    
-class UserInfoForm(forms.ModelForm):
-    class Meta:
-        model = UserInfo
-        fields = ('school','profession','address','company','abouteme')
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email',)
+            
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ('school','profession','address','company','aboutme','photo')

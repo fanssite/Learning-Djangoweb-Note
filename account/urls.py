@@ -46,6 +46,10 @@ urlpatterns =[
          {'template_name':'account/password_reset_complete.html'},
         name='password_reset_complete'),
     
-    url(r'^myinfo/$',views.myInfo,name='myinfo')
+    url(r'^myinfo/$',views.myInfo,name='myinfo'),
+    
+    url(r'myinfo_edit/', views.myinfo_edit, name='myinfo_edit'),
+    
+    url(r'^myimage/',views.my_img,name='myimage')
     
 ]

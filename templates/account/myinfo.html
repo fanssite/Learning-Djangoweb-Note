@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block title %}MyInfo{% endblock %}
 {% block content%}
-<div class='row rext-center vertical-middle-sm'>
+<div class='row text-center vertical-middle-sm'>
 	<h1>My Information</h1>
 	<div class='row'>
 		<div class='col-md-6'>
@@ -27,24 +27,40 @@
 			</div>
 			<div class = 'row'>
 				<div class='col-md-4 text-right'><span>工作单位</span></div>
-				<div class='col-md-8 text-left'>{{userinfo.username}}</div>
+				<div class='col-md-8 text-left'>{{userinfo.company}}</div>
 			</div>
 			<div class = 'row'>
 				<div class='col-md-4 text-right'><span>职业</span></div>
-				<div class='col-md-8 text-left'>{{userinfo.username}}</div>
+				<div class='col-md-8 text-left'>{{userinfo.profession}}</div>
 			</div>		
 			<div class = 'row'>
 				<div class='col-md-4 text-right'><span>地址</span></div>
-				<div class='col-md-8 text-left'>{{userinfo.username}}</div>
+				<div class='col-md-8 text-left'>{{userinfo.address}}</div>
 			</div>		
 			<div class = 'row'>
 				<div class='col-md-4 text-right'><span>个人介绍</span></div>
-				<div class='col-md-8 text-left'>{{userinfo.username}}</div>
+				<div class='col-md-8 text-left'>{{userinfo.aboutme}}</div>
+			</div>
+			<div class = 'row'>
+				<div class='text-center'style="margin:50px 0px 0px 0px ">
+					<a href="{% url 'account:myinfo_edit' %}"><button class='btn btn-primary btn-lg'>Edit My Information</button></a>
+					</div>
 			</div>
 		</div>
-		<div class='col=md-6'>
-			<p>Picture</p>
+		<div class='col-md-6'>
+		{% load staticfiles %}
+			<div style='margin-right:100px'>
+			{% if userinfo.photo %}
+				<img name='user_face' src= {{ userinfo.photo|striptags }} class='img-circle' width='200px' id='my_photo'>
+			{% else %}
+				<img name='user_face' src= {%static 'images/p4.png' %} class='img-circle' width='200px' id='my_photo'>
+			{% endif %}
+			</div>
+			<div style='margin:30px 100px 0px 0px'>
+				<button class='btn btn-primary btn-lg' id='upload_image' onclick='upload_image_layer()'>upload photo</button>
+			</div>
 		</div>
+		
 	</div>
 </div>
 {% endblock%}

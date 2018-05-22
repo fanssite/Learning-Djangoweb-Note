@@ -16,4 +16,7 @@ class UserInfo(models.Model):
     school = models.CharField(max_length=100,blank=True)
     company = models.CharField(max_length=100,blank=True)
     profession = models.CharField(max_length=100,blank=True)
-    abouteme = models.TextField(blank=True)
+    aboutme = models.TextField(blank=True)
+    photo = models.ImageField(blank=True)
+    def __str__(self):
+        return 'user:{0}'.format(self.user.username)
