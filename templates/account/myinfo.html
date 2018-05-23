@@ -60,7 +60,18 @@
 				<button class='btn btn-primary btn-lg' id='upload_image' onclick='upload_image_layer()'>upload photo</button>
 			</div>
 		</div>
-		
 	</div>
 </div>
+<script type='text/javascript' src= "{% static 'js/jquery.js' %}"></script>
+<script type='text/javascript' src= "{% static 'js/layer.js' %}"></script>
+<script>
+function upload_image_layer(){
+	layer.open({
+		title:'upload photo',
+		area:['650px','650px'],
+		type:2,
+		content:"{% url 'account:myimage' %}",
+	});
+}
+</script>
 {% endblock%}
