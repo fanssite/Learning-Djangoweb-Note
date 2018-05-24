@@ -3,9 +3,9 @@
 	<nav class='nav-bar nav-default' role='navigation'>
 		<div class='navbar-header'>
 			{% if userinfo.photo %}
-			<a class='navbar-brand' href="https://docs.djangoproject.com/en/2.0/"> <img src={{ userinfo.photo|striptags }} height='40px'></a>
+			<a class='navbar-brand' href="{% url 'account:myinfo' %}"> <img src={{ userinfo.photo|striptags }} height='40px'></a>
 			{% else %}
-			<a class='navbar-brand' href="https://docs.djangoproject.com/en/2.0/"> <img src="{% static '/images/p.jpg' %}" height='40px'></a>
+			<a class='navbar-brand' href="{% url 'account:myinfo' %}"> <img src="{% static '/images/p.jpg' %}" height='40px'></a>
 			{% endif %}
 		</div>
 		
@@ -16,7 +16,7 @@
 			
 			<ul class="nav navbar-nav navbar-right" style='margin-right:10px'>
 			<li>
-				<a style='margin-right:20px'>{{user.username}}</a>
+				<a style='margin-right:20px' href="{% url 'account:myinfo_edit' %}">{{user.username}}</a>
 			</li>
 				<li><a href="{% url 'blog:blog_title' %}">Home</a></li>
 				<li><a href="{% url 'account:user_logout' %}">LOGOUT</a></li>

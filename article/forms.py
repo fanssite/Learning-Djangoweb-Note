@@ -5,4 +5,4 @@ from .models import ArticleColumn
 class ArticleColumnForm(forms.ModelForm):
     class Meta:
         model = ArticleColumn
-        fields = ('column','created')
+        fields = ('column',)

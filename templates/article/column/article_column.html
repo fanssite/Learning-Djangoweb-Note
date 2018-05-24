@@ -3,11 +3,12 @@
 {% block title %}article column{% endblock %}
 {% block content %}
 <div>
-    <p class='text-right' style='margin-top:30px'><button class='btn btn-primary'>add column</button></p>
+    <p class='text-right' style='margin-top:30px'><button class='btn btn-primary' id='add_column' onclick='add_column()'>add column</button></p>
     <table class='table table-hover'>
     <tr>
     	<td>序号</td>
     	<td>栏目</td>
+    	<td>创作时间</td>
     	<td>名称</td>
     </tr>
     {% for column in columns %}
@@ -15,11 +16,108 @@
     	<td>{{forloop.counter}}</td>
     	<td>{{column.column}}</td>
     	<td>{{column.created}}</td>
-    	<td>--</td>
+    	<td>
+    		<a name='edit' herf='javascript:' onclick='edit_column(this,{{column.id}})'><span class='glyphicon glyphicon-pencil'></span></a>
+    		<a name='delete' herf='javascript:' onclick='delete_column(this,{{column.id}})'><span class='glyphicon glyphicon-trash' style='margin-left:20px;'></span></a>
+		</td>
     </tr>
     {% empty %}
-    <p>Writing someting now.</p>
+    <p>Writing someting here.</p>
     {% endfor %}
     </table>
 </div>
+{% load staticfiles %}
+<script type='text/javascript' src= "{% static 'js/jquery.js' %}"></script>
+<script type='text/javascript' src= "{% static 'js/layer.js' %}"></script>
+<script type='text/javascript'>
+function add_column(){
+	var index = layer.open({
+		type:1,
+		skin:'layui-layer-rim',
+		area:['350px','200px'],
+		title:'new column',
+		content:'<div class="text-center" style="margin-top:20px"><p>Please input column name</p><p>{{column_form.column}}</p></div>',
+		btn:['确认','取消'],
+		yes:function(index,layero){
+			column_name=$('#id_column').val();		//获取输入框的字符
+			$.ajax({
+				url:"{% url 'article:article_column' %}",
+				type:'POST',
+				data:{"column":column_name},		//POST请求中column关键字和对应的值组装成字典
+				success:function(e){
+					if(e=='1'){
+						parent.location.reload();
+						layer.msg('created ok')
+					}if(e=='space'){
+						layer.msg('Please do not enter Spaces.')
+					}else{
+						layer.msg('column name has been exit,chang new one.')
+					}
+				},
+			});
+		},
+		btn2:function(index,layero){
+			layer.close(index);
+		}
+	});
+}
+
+function edit_column(the,column_id){
+	var name=$(the).parents("str").children("td").eq(1).text()
+	var index = layer.open({
+		type:1,
+		skin:'layui-layer-rim',
+		area:['350px','200px'],
+		title:'edit column',
+		content:'<div class="text-center" style="margin-top:20px"><p>Please input new column name</p><p><input type="text" id="new_name"></p></div>',
+		btn:['确认','取消'],
+		yes:function(index,layero){
+			new_name=$('#new_name').val();		//获取输入框的字符
+			$.ajax({
+				url:"{% url 'article:rename_article_column' %}",
+				type:'POST',
+				data:{"column_name":new_name,"column_id":column_id},		//POST请求中column关键字和对应的值组装成字典
+				success:function(e){
+					if(e=='1'){
+						parent.location.reload();
+						layer.msg('Success change.')
+					}else{
+						layer.msg('Failed change.')
+					}
+				},
+			});
+		},
+		//btn2:function(index,layero){
+			//layer.close(index);
+		//}
+	});
+}
+function delete_column(the,column_id){
+	var name=$(the).parents("tr").children("td").eq(1).text();
+	layer.open({
+		type:1,
+		skin:'layui-layer-rim',
+		area:['350px','200px'],
+		title:'delete column',
+		content:'<div class="text-center" style="margin-top:20px"><p>If you want to delete '+name+' column?</p></div>',
+		btn:['确认','取消'],
+		yes:function(index,layero){
+			new_name=$('#new_name').val();		//获取输入框的字符
+			$.ajax({
+				url:"{% url 'article:delete_article_column' %}",
+				type:'POST',
+				data:{"column_id":column_id},		//POST请求中column关键字和对应的值组装成字典
+				success:function(e){
+					if(e=='1'){
+						parent.location.reload();
+						layer.msg('Success delete.')
+					}else{
+						layer.msg('Failed delete.')
+					}
+				},
+			})
+		},
+	})
+}
+</script>
 {% endblock %}
