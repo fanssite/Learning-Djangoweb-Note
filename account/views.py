@@ -82,7 +82,7 @@ def myinfo_edit(req):
         user_form = UserForm(instance=req.user)
         userprofile_form = UserProfileForm(initial={'birth':userprofile.birth,'phone':userprofile.phone})#初始化对象
         userinfo_form = UserInfoForm(initial={'school':userinfo.school,'company':userinfo.company,'address':userinfo.address,'profession':userinfo.profession,'aboutme':userinfo.aboutme})
-        return render(req,'account/myinfo_edit.html',{'user_form':user_form,'userprofile_form':userprofile_form,'userinfo_form':userinfo_form})
+        return render(req,'account/myinfo_edit.html',{'user_form':user_form,'userprofile_form':userprofile_form,'userinfo_form':userinfo_form,'userinfo':userinfo})
     
     
 @login_required(login_url='/account/login/') 
@@ -95,3 +95,4 @@ def my_img(req):
         return HttpResponse('1')
     else:
         return render(req, 'account/Imagecrop.html')
+    

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.admin import User
 from django.utils import timezone
-import slugify
+from slugify import slugify
 from django.urls.base import reverse
 # Create your models here.
 
@@ -27,8 +27,10 @@ class ArticlePost(models.Model):
         
     def __str__(self):
         return self.title
+    
     def save(self,*args,**kargs):   #重写save函数
         self.slug=slugify(self.title)
         super(ArticlePost,self).save(*args,**kargs)
+        
     def get_absolute_url(self):
         return reverse("article:article_detail",args=[self.id,self.slug])

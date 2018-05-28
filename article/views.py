@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import ArticleColumn
+from .models import ArticleColumn,ArticlePost
 from account.models import UserInfo
 from django.views.decorators.csrf import csrf_exempt
 from article.forms import ArticleColumnForm, ArticlePostForm
@@ -56,17 +56,16 @@ def delete_article_column(req):
     
 @login_required(login_url='/account/login/')
 @csrf_exempt
-def ArticlePost(req):
+def articlepost(req):
     if req.method=='POST':
             article_post_form=ArticlePostForm(req.POST)
-            print(article_post_form)
             if article_post_form.is_valid():
-                cd = article_post_form.cleaned_data
-                print(cd)
+#                 cd = article_post_form.cleaned_data
                 try:
                     new_article=article_post_form.save(commit=False)
                     new_article.author = req.user
-                    new_article.column = req.user.article_column.get(id=req.POST['coulmn_id'])
+                    print(new_article.author,req.POST['column_id'])
+                    new_article.column = ArticleColumn.objects.get(user=req.user,id=req.POST['column_id'])
                     new_article.save()
                     return HttpResponse('1')
                 except:
@@ -75,8 +74,49 @@ def ArticlePost(req):
     else:
         article_post_form=ArticlePostForm()
         article_columns = ArticleColumn.objects.filter(user=req.user)   #req.user.article_column.all()  models中有个related——name参数用来查询登录用户的对应models字段Queryset
-        return render(req, 'article/column/article_post.html',{'article_post_form':article_post_form})
-        
-        
-                    
-                    
+        myinfo=UserInfo.objects.get(user=req.user)
+        return render(req, 'article/column/article_post.html',{'article_post_form':article_post_form,'article_columns':article_columns,'userinfo':myinfo})
+    
+@login_required(login_url='/account/login/')
+def article_list(req):
+    articles = ArticlePost.objects.filter(author=req.user)
+    myinfo=UserInfo.objects.get(user=req.user)
+    return render(req,'article/column/article_list.html',{'articles':articles,'userinfo':myinfo})
+            
+@login_required(login_url='/account/login/')                    
+def article_detail(req,id,slug):
+    article=get_object_or_404(ArticlePost,id=id,slug=slug)
+    myinfo=UserInfo.objects.get(user=req.user)
+    return render(req,'article/column/article_detail.html',{'article':article,'userinfo':myinfo})
+
+@login_required(login_url='/account/login/')
+@csrf_exempt
+@require_POST
+def delete_article(req):
+    article_id=req.POST['article_id']
+    try:
+        article=ArticlePost.objects.get(id=article_id)
+        article.delete()
+        return HttpResponse('1')
+    except:
+        return HttpResponse('0')
+
+@login_required(login_url='/account/login/')
+@csrf_exempt
+def edit_article(req,article_id):
+    if req.method=='GET':
+#         print(dir(req.user),article_id)
+        article_columns = req.user.article_column.all()
+        article = ArticlePost.objects.get(id=article_id)
+        this_article_form = ArticlePostForm(initial={'title':article.title})
+        this_article_column = article.column
+        return render(req,'article/column/edit_article.html', {'article_columns':article_columns,'article':article,'this_article_form':this_article_form,'this_article_column':this_article_column})
+    else:
+        edit_article=ArticlePost.objects.get(id=article_id)
+        try:
+            edit_article.column = req.user.article_column.get(id=req.POST['column_id'])
+            edit_article.title=req.POST['title']
+            edit_article.body=req.POST['body']
+            return HttpResponse('1')
+        except:
+            return HttpResponse('2')
