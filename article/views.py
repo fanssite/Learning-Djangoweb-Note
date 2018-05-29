@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from article.forms import ArticleColumnForm, ArticlePostForm
 from django.http.response import HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 # Create your views here.
 @login_required(login_url='/account/login/')
@@ -80,8 +81,19 @@ def articlepost(req):
 @login_required(login_url='/account/login/')
 def article_list(req):
     articles = ArticlePost.objects.filter(author=req.user)
+    paginator = Paginator(articles,2)
+    page = req.GET.get('page')
     myinfo=UserInfo.objects.get(user=req.user)
-    return render(req,'article/column/article_list.html',{'articles':articles,'userinfo':myinfo})
+    try:
+        current_page=paginator.page(page)
+        article = current_page.object_list
+    except PageNotAnInteger:
+        current_page=paginator.page(1)
+        article=current_page.object_list
+    except EmptyPage:
+        current_page=paginator.page(paginator.num_pages)
+        article=current_page.object_list
+    return render(req,'article/column/article_list.html',{'articles':article,'userinfo':myinfo,'page':current_page})
             
 @login_required(login_url='/account/login/')                    
 def article_detail(req,id,slug):
@@ -117,6 +129,7 @@ def edit_article(req,article_id):
             edit_article.column = req.user.article_column.get(id=req.POST['column_id'])
             edit_article.title=req.POST['title']
             edit_article.body=req.POST['body']
+            edit_article.save()
             return HttpResponse('1')
         except:
             return HttpResponse('2')
