@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
-
+from account.models import UserInfo 
 # Create your views here.
 from blog.models import BlogArticles,Register
-def blog_title(request):
+def blog_title(req):
     blogs = BlogArticles.objects.all()
-    return render(request, 'blog/title.html',{"blogs":blogs})
-def blog_article(request,aid):
+    return render(req, 'blog/title.html',{"blogs":blogs})
+def blog_article(req,aid):
     print(aid)
     article = BlogArticles.objects.get(id=aid)
-    return render(request, 'blog/content.html',{'article':article})
+    return render(req, 'blog/content.html',{'article':article})
 # def Sign_in(request):
 #     if request.method=='GET':
 #         reg = Register()

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Article Lists{% endblock %}
+{% block content %}
+
+<div class='row text-center vertical-middle-sm'>
+	<h1>Reading,Again Reading,Don't Close Your Eyes&Learing Power</h1>
+</div>
+<div class='container'>
+	<div class='col-md-8'>
+		{% for article in articles %}
+		<div class='list-group'>
+			<a href="{{article.get_url_path}}" class='list-group-item active'><h4 class='list-group-item-heading'>{{article.title}}</h4></a>
+			<p class='list-group-item-text'>author:<a href="{% url 'article:author_article' article.author %}">{{article.author}}</a></p>
+			<p class='list-group-item-text'>summary:{{article.body|slice:'100'|linebreaks}}</p>
+		</div>
+		{% endfor %}
+		{% include 'article/paginator.html' %}
+		</div>
+	<div class='col-md-4 text-right'>
+		<div>
+			{% if userinfo.photo %}
+				<img name='user_face' src= {{ userinfo.photo|striptags }} class='img-circle' id='my_photo'>
+			{% else %}
+				<img name='user_face' src= {%static 'images/p4.png' %} class='img-circle' id='my_photo'>
+			{% endif %}
+		</div>
+		<div style='margin-top:20px'>
+			<p>{{user.username}}</p>
+		</div>
+		<div>
+			{% if userinfo %}
+			<p>{{userinfo.company}}</p>
+			<p>{{userinfo.aboutme}}</p>
+			{% else %}
+			<p>Can not found author's inforamtion.</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

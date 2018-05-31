@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Article Lists{% endblock %}
+{% block content %}
+<div class='row text-center vertical-middle-sm'>
+	<h1>Reading,Again Reading,Don't Close Your Eyes&Learing Power</h1>
+</div>
+<div class='container'>
+	{% for article in articles %}
+	<div class='list-group'>
+		<a href="{{article.get_url_path}}" class='list-group-item active'><h4 class='list-group-item-heading'>{{article.title}}</h4></a>
+		<p class='list-group-item-text'>author:<a href="{% url 'article:author_article' article.author %}">{{article.author}}</a></p>
+		<p class='list-group-item-text'>summary:{{article.body|slice:'150'|linebreaks}}</p>
+	</div>
+	{% endfor %}
+	{% include 'article/paginator.html' %}
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@
     <tr>
     	<td>{{forloop.counter}}</td>
     	<td>{{column.column}}</td>
-    	<td>{{column.created}}</td>
+    	<td>{{column.created|date:'Y-m-d H:i'}}</td>  <!-- D:\Python36\Lib\site-packages\django\utils\dateformat.py文件有date filter的详细说明 -->
     	<td>
     		<a name='edit' herf='javascript:' onclick='edit_column(this,{{column.id}})'><span class='glyphicon glyphicon-pencil'></span></a>
     		<a name='delete' herf='javascript:' onclick='delete_column(this,{{column.id}})'><span class='glyphicon glyphicon-trash' style='margin-left:20px;'></span></a>

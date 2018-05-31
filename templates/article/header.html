@@ -5,22 +5,25 @@
 			{% if userinfo.photo %}
 			<a class='navbar-brand' href="{% url 'account:myinfo' %}"> <img src={{ userinfo.photo|striptags }} height='40px'></a>
 			{% else %}
-			<a class='navbar-brand' href="{% url 'account:myinfo' %}"> <img src="{% static '/images/p.jpg' %}" height='40px'></a>
+			<a class='navbar-brand' style='display:none;' href="{% url 'account:myinfo' %}"> <img src="{% static '/images/p.jpg' %}" height='40px'></a>
 			{% endif %}
 		</div>
 		
 		<div>
 			<ul class='nav navbar-nav' role='tablelist'>
-				<li><a href="{% url 'article:article_column' %}">文章管理</a></li>
+				<li><a href="{% url 'article:article_column' %}">Article Manage</a></li>
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right" style='margin-right:10px'>
 			<li>
 				<a style='margin-right:20px' href="{% url 'account:myinfo_edit' %}">{{user.username}}</a>
 			</li>
-				<li><a href="{% url 'blog:blog_title' %}">Home</a></li>
+				{% if userinfo %}
+				<li><a href="{% url 'home' %}">Home</a></li>
 				<li><a href="{% url 'account:user_logout' %}">LOGOUT</a></li>
-			
+				{% else %}
+				<li><a href="{% url 'account:user_login' %}">LOGIN</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</nav>	
