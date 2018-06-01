@@ -14,5 +14,6 @@ urlpatterns = [
     path('del_article/',views.delete_article,name='del_article'),
     path('list_article_titles/',list_views.article_list,name='list_article_titles'),
     path('^list_article_detail/<int:id>/<slug:slug>/$',list_views.article_detail,name='list_article_detail'),
-    path('list_article_titles/<str:username>/',list_views.article_list,name='author_article')
+    path('list_article_titles/<str:username>/',list_views.article_list,name='author_article'),
+    path('like_article/',list_views.like_article,name='like_article'),
 ]
